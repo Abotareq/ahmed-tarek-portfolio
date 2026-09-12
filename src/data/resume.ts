@@ -260,14 +260,32 @@ export const education = {
   grade: "Good",
 } as const;
 
-export const training = {
-  program: "MEARN Stack Program",
-  institution: "Information Technology Institute (ITI), Egypt",
-  period: "2025",
-  description:
-    "Full-stack training on the MERN stack — Express and Node APIs, MongoDB schemas, React and Angular front ends, RESTful API integration, Git, and Agile sprints.",
-  tech: ["MongoDB", "Express", "Angular", "React", "Node.js", "REST APIs", "Git", "Agile"],
-} as const;
+export type Training = {
+  program: string;
+  institution: string;
+  period: string;
+  description: string;
+  tech: readonly string[];
+};
+
+export const trainings: readonly Training[] = [
+  {
+    program: "Software Full-Stack Engineer Trainee Program",
+    institution: "Next for Technology Development, Cairo, Egypt",
+    period: "2026",
+    description:
+      "Built and deployed full-stack features end to end — ASP.NET Core Web APIs backed by SQL Server and EF Core, paired with React front ends — with JWT authentication, role-based authorization, and Git branching / pull request workflows in a team setting.",
+    tech: ["ASP.NET Core", "SQL Server", "EF Core", "React", "JWT", "Git"],
+  },
+  {
+    program: "MEARN Stack Program",
+    institution: "Information Technology Institute (ITI), Egypt",
+    period: "2025",
+    description:
+      "Full-stack training on the MERN stack — Express and Node APIs, MongoDB schemas, React and Angular front ends, RESTful API integration, Git, and Agile sprints.",
+    tech: ["MongoDB", "Express", "Angular", "React", "Node.js", "REST APIs", "Git", "Agile"],
+  },
+];
 
 export const navLinks = [
   { label: "Home", href: "#home" },
