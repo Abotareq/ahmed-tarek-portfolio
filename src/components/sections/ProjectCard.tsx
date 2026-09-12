@@ -45,7 +45,7 @@ export function ProjectCard({ project, skin, total }: ProjectCardProps) {
     <article
       id={`project-${project.id}`}
       data-card
-      className={`grain relative origin-top overflow-hidden rounded-2xl md:rounded-3xl lg:sticky lg:top-28 lg:will-change-transform ${s.card}`}
+      className={`grain relative origin-top overflow-hidden rounded-2xl md:rounded-3xl lg:sticky lg:will-change-transform ${s.card}`}
     >
       {/* Dimmer, faded in by the parent as the next card slides over */}
       <div
@@ -53,7 +53,7 @@ export function ProjectCard({ project, skin, total }: ProjectCardProps) {
         aria-hidden
         className="pointer-events-none absolute inset-0 z-10 bg-ink opacity-0"
       />
-      <div className="grid gap-10 p-6 sm:p-8 md:grid-cols-12 md:gap-8 md:p-12 lg:p-16">
+      <div className="grid gap-10 p-6 sm:p-8 md:grid-cols-12 md:gap-8 md:p-10 xl:p-12">
         {/* Left — identity */}
         <div className="flex flex-col md:col-span-5">
           <p className={`text-eyebrow flex items-center gap-3 ${s.muted}`}>
@@ -62,7 +62,7 @@ export function ProjectCard({ project, skin, total }: ProjectCardProps) {
             <span>of {String(total).padStart(2, "0")}</span>
           </p>
 
-          <h3 className="text-display mt-8 text-[clamp(2.4rem,5vw,4.6rem)] leading-[0.98]">
+          <h3 className="text-display mt-6 text-[clamp(2.4rem,4.5vw,4.2rem)] leading-[0.98]">
             {project.name}
           </h3>
           <p className="mt-4 text-lg leading-snug md:text-xl">{project.tagline}</p>
@@ -88,7 +88,7 @@ export function ProjectCard({ project, skin, total }: ProjectCardProps) {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`Open ${project.name}: ${project.links[0].label}`}
-            className={`group/img relative mt-8 block aspect-[4/3] overflow-hidden rounded-xl ${
+            className={`group/img relative mt-8 block aspect-[16/10] overflow-hidden rounded-xl ${
               skin === "ink" ? "bg-cream/10" : "bg-ink/5"
             }`}
           >
@@ -126,7 +126,7 @@ export function ProjectCard({ project, skin, total }: ProjectCardProps) {
             {project.description}
           </p>
 
-          <p className={`text-eyebrow mt-10 ${s.muted}`}>What I worked on</p>
+          <p className={`text-eyebrow mt-8 ${s.muted}`}>What I worked on</p>
           <ul className="mt-4 flex flex-col gap-3 text-[15px] leading-relaxed md:text-base">
             {project.features.map((f) => (
               <li key={f} className="flex gap-3">
@@ -140,7 +140,7 @@ export function ProjectCard({ project, skin, total }: ProjectCardProps) {
             ))}
           </ul>
 
-          <p className={`text-eyebrow mt-10 ${s.muted}`}>Technologies</p>
+          <p className={`text-eyebrow mt-8 ${s.muted}`}>Technologies</p>
           <div className="mt-4 flex flex-wrap gap-2">
             {project.tech.map((t) => (
               <Chip key={t} tone={s.tone}>
