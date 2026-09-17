@@ -6,7 +6,7 @@ import { projects } from "@/data/resume";
 import { ProjectMosaic } from "./ProjectMosaic";
 import { ProjectCard } from "./ProjectCard";
 
-const skins = ["cream", "ink", "pink"] as const;
+const skins = ["cream", "ink", "pink", "ink"] as const;
 
 /** Preferred pin offset below the fixed nav, and breathing room at the bottom. */
 const PIN_TOP = 96;

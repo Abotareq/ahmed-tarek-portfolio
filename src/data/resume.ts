@@ -246,6 +246,43 @@ export const projects: readonly Project[] = [
       { label: "GitHub", href: "https://github.com/Abotareq/customer-service" },
     ],
   },
+  {
+    id: "inventory",
+    index: "04",
+    name: "Fulfillment & Inventory Management Platform",
+    tagline: "Multi-warehouse Inventory & Order Backend",
+    image: {
+      src: "/projects/inventory.webp",
+      alt: "README of the Fulfillment & Inventory Management Platform repository",
+    },
+    role: "Solo — Backend",
+    year: "2026",
+    description:
+      "A backend API for managing product catalogs, warehouse inventory, and customer orders. Tracks products across multiple warehouses, keeps stock accurate as orders move through their lifecycle, and maintains a full audit trail of every change — without double-counting or overselling.",
+    features: [
+      "Clean Architecture across five projects (Domain, Application, Infrastructure, Contracts, Api) with MediatR CQRS and FluentValidation.",
+      "Per-warehouse stock with a two-phase reservation model and an order lifecycle (Draft → Submitted → Processing → Completed) with clean cancellation.",
+      "Optimistic concurrency on Stock and Order, idempotent order creation via client-supplied keys, and price snapshots on order items.",
+      "Domain events dispatched from a SaveChanges interceptor write field-level audit logs and stock/order history in the same transaction.",
+      "JWT authentication via ASP.NET Identity with four roles: Administrator, Warehouse Operator, Sales Agent, and Manager.",
+    ],
+    tech: [
+      ".NET 10",
+      "ASP.NET Core Web API",
+      "EF Core",
+      "SQL Server",
+      "MediatR",
+      "FluentValidation",
+      "ErrorOr",
+      "ASP.NET Identity",
+      "JWT",
+      "Swagger",
+    ],
+    links: [
+      { label: "Live site", href: "https://inventory-management-platform-nu.vercel.app" },
+      { label: "GitHub", href: "https://github.com/Abotareq/Inventory-Management-Platform" },
+    ],
+  },
 ];
 
 export const education = {

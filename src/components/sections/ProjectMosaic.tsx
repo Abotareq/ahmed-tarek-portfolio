@@ -22,7 +22,7 @@ const tileStyle: Record<Tile["kind"], string> = {
   meta: "bg-pink text-ink",
 };
 
-/** Build a 3×4 mosaic where every column belongs to one project. */
+/** Build a mosaic of 4 rows where every column belongs to one project. */
 function buildTiles(): Tile[] {
   const rows: Tile[][] = [
     projects.map((p) => ({ kind: "name", text: p.name })),
@@ -37,12 +37,14 @@ function buildTiles(): Tile[] {
   return rows.flat();
 }
 
-const NUM_COLUMNS = 3;
+const NUM_COLUMNS = projects.length;
 const tiles = buildTiles();
+const numberWords = ["", "One", "Two", "Three", "Four", "Five", "Six"];
+const countWord = numberWords[NUM_COLUMNS] ?? String(NUM_COLUMNS);
 
 /**
  * Sticky opener for the projects section, re-imagining the reference's
- * signature interaction: twelve tiles (type + screenshots) slide in
+ * signature interaction: a grid of tiles (type + screenshots) slides in
  * column by column (alternating from top and bottom), then the grid zooms
  * and splits apart to uncover the section statement and a call to action.
  */
@@ -122,20 +124,28 @@ export function ProjectMosaic({ scrollTarget }: { scrollTarget: string }) {
             );
           });
 
-          // --- Zoom + split: side columns push out, centre column parts.
+          // --- Zoom + split: outer columns push out, inner columns part
+          // vertically (and drift outward a little) to open a hole in the middle.
+          const last = columns.length - 1;
+          const inner = columns.slice(1, last);
           const open = gsap.timeline({ defaults: { duration: 1, ease: "power3.inOut" } });
           open.to(g, { scale: zoom });
           open.to(columns[0], { xPercent: -spreadX }, "<");
-          open.to(columns[2], { xPercent: spreadX }, "<");
-          open.to(
-            columns[1],
-            {
-              yPercent: (i) => (i < Math.floor(columns[1].length / 2) ? -1 : 1) * spreadY,
-              duration: 0.5,
-              ease: "power1.inOut",
-            },
-            "-=0.5",
-          );
+          open.to(columns[last], { xPercent: spreadX }, "<");
+          inner.forEach((column, i) => {
+            // -1 … 1 across the inner columns; 0 for a single centre column.
+            const side = inner.length > 1 ? (i / (inner.length - 1)) * 2 - 1 : 0;
+            open.to(
+              column,
+              {
+                xPercent: side * spreadX * 0.6,
+                yPercent: (j) => (j < Math.floor(column.length / 2) ? -1 : 1) * spreadY,
+                duration: 0.5,
+                ease: "power1.inOut",
+              },
+              i === 0 ? "-=0.5" : "<",
+            );
+          });
           open.to(g, { opacity: 0.45, duration: 0.6, ease: "power1.out" }, "-=0.4");
 
           // --- Content toggle (direction-aware, like the reference).
@@ -202,8 +212,9 @@ export function ProjectMosaic({ scrollTarget }: { scrollTarget: string }) {
             ref={description}
             className="mt-6 max-w-[44ch] text-base leading-relaxed text-ink/75 md:text-lg"
           >
-            Three projects across .NET and the MERN stack — from architecture
-            and authentication to checkout flows and real-time messaging.
+            {countWord} projects across .NET and the MERN stack — from
+            architecture and authentication to checkout flows, real-time
+            messaging, and multi-warehouse inventory.
           </p>
           <div ref={cta} className="mt-8">
             <Button
@@ -220,10 +231,14 @@ export function ProjectMosaic({ scrollTarget }: { scrollTarget: string }) {
         </div>
 
         {/* Mosaic */}
-        <div className="pointer-events-none absolute left-1/2 top-1/2 z-10 w-[min(92vw,46rem)] -translate-x-1/2 -translate-y-1/2">
+        <div
+          className="pointer-events-none absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2"
+          style={{ width: `min(92vw, ${NUM_COLUMNS * 15}rem)` }}
+        >
           <ul
             ref={grid}
-            className="grid grid-cols-3 gap-x-3 gap-y-4 will-change-transform md:gap-x-6 md:gap-y-8"
+            className="grid gap-x-3 gap-y-4 will-change-transform md:gap-x-6 md:gap-y-8"
+            style={{ gridTemplateColumns: `repeat(${NUM_COLUMNS}, minmax(0, 1fr))` }}
           >
             {tiles.map((tile, i) => (
               <li
